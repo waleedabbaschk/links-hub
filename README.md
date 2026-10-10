@@ -1,24 +1,26 @@
 # Links Hub
 
-500+ useful websites ek jagah. Cream UI, search, categories, favorites aur dark mode.
+1000+ useful websites in one place, organized by category. Cream UI, search, favorites, dark mode and more.
 
-## Chalane ka tareeqa
-1. VS Code mein folder kholo
-2. `index.html` par right-click, phir Open with Live Server (ya seedha double-click)
+## How to run
+1. Open the folder in VS Code.
+2. Right-click `index.html` and choose Open with Live Server (or just double-click it).
 
-## Naya link kaise add karein
-`data/links.js` kholo aur array mein yeh line add karo:
+## How to add a new link
+Open a file in `data/` (for example `links-5.js`) and add a line like this:
 
-    { name: "Site Name", url: "https://example.com", category: "Utilities", tags: ["free"], desc: "Chhoti si description." },
+    ["Site Name","https://example.com","Utilities","Short description.","free,tool"],
 
-Nayi category chahiye? Bas `category` mein naya naam likh do, chip khud ban jayegi.
+If you need a new category, just write a new category name and add its icon and color in `js/app.js`.
 
 ## Files
-- `index.html` : main page
-- `css/themes.css` : colors (light/dark)
-- `css/style.css` : layout aur cards
-- `js/app.js` : rendering aur events
-- `js/search.js` : search aur filter
-- `js/favorites.js` : bookmarks (localStorage)
-- `js/theme.js` : theme switch
-- `data/links.js` : saare links
+- `index.html`: main page
+- `css/themes.css`: light and dark colors
+- `css/style.css`: layout and cards
+- `js/app.js`: rendering and events
+- `js/search.js`: search and filter
+- `js/favorites.js`: bookmarks (localStorage)
+- `js/theme.js`: theme switch
+- `js/extras.js`: USD/PKR widget, PWA, bottom bar
+- `data/`: all the links
+- `tools/check-links.ps1`: broken link checker

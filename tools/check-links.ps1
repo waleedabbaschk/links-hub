@@ -39,6 +39,6 @@ $results | Sort-Object Status, Url | Export-Csv $report -NoTypeInformation -Enco
 Write-Host ""
 $results | Group-Object Status | ForEach-Object { Write-Host ("{0}: {1}" -f $_.Name, $_.Count) }
 Write-Host ""
-Write-Host "DEAD / ERROR links (inhein check karo):" -ForegroundColor Yellow
+Write-Host "DEAD / ERROR links (please check these):" -ForegroundColor Yellow
 $results | Where-Object { $_.Status -in "DEAD", "ERROR" } | Format-Table -AutoSize
-Write-Host ("Poori report: {0}" -f $report) -ForegroundColor Green
+Write-Host ("Full report: {0}" -f $report) -ForegroundColor Green
