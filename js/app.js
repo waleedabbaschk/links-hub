@@ -81,7 +81,7 @@
     "Channels": { i: "\u{1F4FA}", c: "#dc2626" }, "Open Source": { i: "\u{1F427}", c: "#ca8a04" },
     "Cybersecurity": { i: "\u{1F6E1}\uFE0F", c: "#be185d" }, "Data Science": { i: "\u{1F4CA}", c: "#1d4ed8" },
     "Gardening": { i: "\u{1F331}", c: "#15803d" }, "Pets": { i: "\u{1F43E}", c: "#b45309" },
-    "Environment": { i: "\u{1F30D}", c: "#0d9488" }, "Books": { i: "\u{1F4D5}", c: "#9a3412" }
+    "Environment": { i: "\u{1F30D}", c: "#0d9488" }, "Universities": { i: "\u{1F3EB}", c: "#b45309" }, "Books": { i: "\u{1F4D5}", c: "#9a3412" }
   };
   const FALLBACK = ["#d2793a", "#3b82c4", "#2f8f6b", "#8e44ad", "#e0527a", "#0f9d9a", "#c9a227"];
   function meta(cat) {
@@ -92,7 +92,7 @@
 
   const GROUPS = [
     { n: "Pakistan", i: "\u{1F1F5}\u{1F1F0}", c: "#15803d", cats: ["Government", "Pakistan Local", "Banking", "Law", "Urdu", "News", "Agriculture", "Religion", "Islamic Studies"] },
-    { n: "Study", i: "\u{1F393}", c: "#d2793a", cats: ["Education", "Scholarships", "Learning", "Exams", "Writing", "Science", "History", "Languages", "Books", "Engineering", "Medical", "Architecture", "Data Science"] },
+    { n: "Study", i: "\u{1F393}", c: "#d2793a", cats: ["Education", "Scholarships", "Learning", "Exams", "Writing", "Science", "History", "Languages", "Books", "Engineering", "Medical", "Architecture", "Data Science", "Universities"] },
     { n: "Work & Money", i: "\u{1F4BC}", c: "#3b82c4", cats: ["Jobs", "Freelancing", "Careers", "Business", "Marketing", "Finance", "Productivity"] },
     { n: "Tech", i: "\u{1F4BB}", c: "#4338ca", cats: ["Developer", "Tech", "Cybersecurity", "Open Source", "Utilities", "Free Downloads", "Gadgets", "AI Tools"] },
     { n: "Creative", i: "\u{1F3A8}", c: "#e0527a", cats: ["Design", "Media", "Photography", "Music", "Crafts", "Home & DIY", "Channels"] },

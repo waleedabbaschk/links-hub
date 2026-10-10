@@ -51,7 +51,6 @@ window.LINKS = (window.LINKS || []).concat([
   ["Poetry Foundation","https://www.poetryfoundation.org","Books","Poems aur poets ka collection.","poetry"],
   ["Poets.org","https://poets.org","Books","Poetry aur poets ki information.","poetry"],
   ["Urdu Point Books","https://www.urdupoint.com/books","Books","Urdu kitabein aur adab.","urdu,books"],
-  ["Arsh Books (Urdu Novels)","https://www.urdunovelbanks.com","Books","Urdu novels ka collection.","urdu,novels"],
 
   // ---- Gardening ----
   ["Royal Horticultural Society","https://www.rhs.org.uk","Gardening","Paudhon aur gardening ki guides.","plants,guides"],

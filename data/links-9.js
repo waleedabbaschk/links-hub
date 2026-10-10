@@ -43,7 +43,6 @@ window.LINKS = (window.LINKS || []).concat([
   ["Islamic Relief","https://www.islamic-relief.org","Islamic Studies","Charity aur zakat.","charity,zakat"],
   ["Alkhidmat Foundation","https://www.alkhidmat.org","Islamic Studies","Pakistan mein welfare aur relief.","pakistan,charity"],
   ["Saudi e-Visa","https://visa.mofa.gov.sa","Islamic Studies","Umrah aur Saudi visa ki official site.","umrah,visa"],
-  ["Pakistan Hajj","https://hajj.gov.pk","Islamic Studies","Hajj ki official information.","hajj,pakistan"],
 
   // ---- Travel (Pakistan trips, hotels, trekking) ----
   ["Wikivoyage Pakistan","https://en.wikivoyage.org/wiki/Pakistan","Travel","Pakistan ki travel guide, shehr aur treks.","pakistan,guide"],

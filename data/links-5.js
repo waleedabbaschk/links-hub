@@ -109,8 +109,6 @@ window.LINKS = (window.LINKS || []).concat([
   ["Thingiverse","https://www.thingiverse.com","Home & DIY","3D printing ke models.","3dprint"],
 
   // ---- Lifestyle ----
-  ["Pakistani Fashion (Hum Style)","https://www.humstyle.com","Lifestyle","Fashion aur lifestyle.","fashion,pakistan"],
-  ["She Magazine","https://www.shemagazine.pk","Lifestyle","Pakistani women ka lifestyle.","pakistan,women"],
   ["Pakistan Hotels (Hotels.com)","https://www.hotels.com","Lifestyle","Hotels aur qeematein.","hotels,booking"],
   ["Numbeo","https://www.numbeo.com","Lifestyle","Shehron ka kharcha aur cost of living.","cost,compare"],
   ["Expatistan","https://www.expatistan.com","Lifestyle","Cost of living compare karo.","cost,compare"],
@@ -119,5 +117,4 @@ window.LINKS = (window.LINKS || []).concat([
   ["Snopes","https://www.snopes.com","Lifestyle","Jhooti khabron ki fact check.","factcheck"],
   ["Time Out","https://www.timeout.com","Lifestyle","Shehron mein ghoomne ki jaghein.","city,events"],
   ["Zameen Blog","https://www.zameen.com/blog","Lifestyle","Property aur ghar ke tips.","property,tips"],
-  ["Daraz Mall (Fashion)","https://www.daraz.pk/shop-fashion","Lifestyle","Kapray aur fashion.","fashion,shopping"]
 ].map(function (a) { return { name: a[0], url: a[1], category: a[2], desc: a[3], tags: a[4].split(",") }; }));

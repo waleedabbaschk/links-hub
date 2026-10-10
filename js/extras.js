@@ -14,40 +14,6 @@
     deferred = null; $("installBtn").hidden = true;
   });
 
-  // ---- Namaz timings (aladhan.com free API) ----
-  const CITIES = ["Islamabad", "Lahore", "Karachi", "Peshawar", "Quetta", "Abbottabad"];
-  const sel = $("city");
-  sel.innerHTML = CITIES.map(c => `<option>${c}</option>`).join("");
-  sel.value = localStorage.getItem("lh-city") || "Islamabad";
-  let timings = null;
-  const today = () => { const d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); };
-  const hm = s => s.slice(0, 5).split(":").map(Number);
-  function fmt(s) { const [h, m] = hm(s); return ((h % 12) || 12) + ":" + String(m).padStart(2, "0") + " " + (h >= 12 ? "PM" : "AM"); }
-  function showPrayer() {
-    const el = $("prayer");
-    if (!timings) { el.textContent = "-"; return; }
-    const now = new Date(), mins = now.getHours() * 60 + now.getMinutes();
-    const names = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
-    const next = names.find(n => { const [h, m] = hm(timings[n]); return h * 60 + m > mins; }) || "Fajr";
-    el.textContent = next + " " + fmt(timings[next]);
-  }
-  async function loadPrayer() {
-    const city = sel.value, key = "lh-prayer-" + city + "-" + today();
-    try { timings = JSON.parse(localStorage.getItem(key)); } catch { timings = null; }
-    if (!timings) {
-      try {
-        const r = await fetch("https://api.aladhan.com/v1/timingsByCity?city=" + encodeURIComponent(city) + "&country=Pakistan&method=1&school=1");
-        const j = await r.json();
-        timings = j.data.timings;
-        localStorage.setItem(key, JSON.stringify(timings));
-      } catch { timings = null; }
-    }
-    showPrayer();
-  }
-  sel.addEventListener("change", () => { localStorage.setItem("lh-city", sel.value); loadPrayer(); });
-  loadPrayer();
-  setInterval(showPrayer, 60000);
-
   // ---- USD / PKR (open.er-api.com free API) ----
   async function loadFx() {
     const el = $("fx");
