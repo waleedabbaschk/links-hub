@@ -1,6 +1,46 @@
 (function () {
   const $ = id => document.getElementById(id);
-  const state = { q: "", cat: "All", group: null, onlyFav: false };
+  const LS = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+  const state = { q: "", cat: "All", group: null, onlyFav: false, sort: "default", lang: LS.get("lh-lang", "en") };
+
+  const T = {
+    pill: ["Students, freelancers aur sab ke liye", "طلبہ، فری لانسرز اور سب کے لیے"],
+    h1a: ["Sab zaroori websites,", "تمام ضروری ویب سائٹس،"],
+    h1b: ["ek jagah", "ایک جگہ"],
+    sub: ["Government, jobs, education aur daily tools. Search karo aur seedha kholo.", "سرکاری سروسز، نوکریاں، تعلیم اور روزمرہ ٹولز۔ تلاش کریں اور سیدھا کھولیں۔"],
+    ph: ["Search karo... (jaise: nadra, pdf, scholarship)", "تلاش کریں... (جیسے: nadra, pdf)"],
+    fav: ["Favorites", "پسندیدہ"],
+    suggest: ["+ Link bhejo", "+ لنک بھیجیں"],
+    install: ["Install app", "ایپ انسٹال کریں"],
+    sortl: ["Sort:", "ترتیب:"],
+    s_def: ["Default", "عام"],
+    s_az: ["A-Z", "A-Z"],
+    s_za: ["Z-A", "Z-A"],
+    s_open: ["Meri most opened", "میرے سب سے زیادہ کھولے"],
+    today: ["Aaj ka tool", "آج کا ٹول"],
+    recent: ["Haal hi mein khole", "حال ہی میں کھولے گئے"],
+    student: ["Student corner:", "طلبہ کارنر:"],
+    next: ["Agli namaz", "اگلی نماز"],
+    all: ["All", "سب"],
+    copied: ["Link copy ho gaya", "لنک کاپی ہو گیا"],
+    empty: ["Kuch nahi mila. Doosra word try karo.", "کچھ نہیں ملا۔ کوئی اور لفظ آزمائیں۔"],
+    home: ["Home", "ہوم"],
+    search: ["Search", "تلاش"],
+    lang: ["اردو", "English"]
+  };
+  const GN = { "Pakistan": "پاکستان", "Study": "تعلیم", "Work & Money": "کام اور پیسہ", "Tech": "ٹیک", "Creative": "تخلیقی", "Life": "زندگی", "Fun": "تفریح" };
+  const t = k => T[k][state.lang === "ur" ? 1 : 0];
+
+  function applyLang() {
+    const ur = state.lang === "ur";
+    document.documentElement.lang = ur ? "ur" : "en";
+    document.body.classList.toggle("ur", ur);
+    document.querySelectorAll("[data-i18n]").forEach(el => { if (T[el.dataset.i18n]) el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  }
 
   // duplicate links hatao
   const seen = new Set();
@@ -9,6 +49,7 @@
     if (seen.has(k)) return false;
     seen.add(k); return true;
   });
+  const byUrl = {}; links.forEach(l => byUrl[l.url] = l);
 
   const META = {
     "Government": { i: "\u{1F3DB}\uFE0F", c: "#2f8f6b" }, "Jobs": { i: "\u{1F4BC}", c: "#3b82c4" },
@@ -58,9 +99,38 @@
     { n: "Life", i: "\u{1F33F}", c: "#16a34a", cats: ["Health", "Fitness", "Mental Health", "Cooking", "Lifestyle", "Shopping", "Travel", "Automotive", "Kids & Family", "Gardening", "Pets", "Environment"] },
     { n: "Fun", i: "\u{1F389}", c: "#9333ea", cats: ["Entertainment", "Social Media", "Sports", "Gaming"] }
   ];
+  const QUICK = [["Board Results", "board results"], ["Past Papers", "pastpapers"], ["Scholarships", "scholarship"], ["Admissions", "admissions"], ["Jobs", "jobs"], ["Free Courses", "free courses"]];
 
   const host = u => { try { return new URL(u).hostname.replace("www.", ""); } catch { return u; } };
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  let toastTimer;
+  function toast(m) {
+    const el = $("toast"); el.textContent = m; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+  }
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); }
+    catch {
+      const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch {}
+      ta.remove();
+    }
+    toast(t("copied"));
+  }
+
+  function track(url) {
+    const r = LS.get("lh-recent", []).filter(u => u !== url);
+    r.unshift(url); LS.set("lh-recent", r.slice(0, 10));
+    const c = LS.get("lh-clicks", {}); c[url] = (c[url] || 0) + 1; LS.set("lh-clicks", c);
+  }
+
+  function dailyPick() {
+    if (!links.length) return null;
+    const d = new Date();
+    const key = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    return links[(key * 7919) % links.length];
+  }
 
   function groupsWithData() {
     const counts = {};
@@ -78,9 +148,10 @@
   function renderCats() {
     const { out, counts } = groupsWithData();
     let h = `<div class="gtabs">`;
-    h += `<button class="gtab ${!state.group && state.cat === "All" ? "active" : ""}" style="--c:#d2793a" data-all="1">\u2728 All <small>${links.length}</small></button>`;
+    h += `<button class="gtab ${!state.group && state.cat === "All" ? "active" : ""}" style="--c:#d2793a" data-all="1">\u2728 ${esc(t("all"))} <small>${links.length}</small></button>`;
     out.forEach(g => {
-      h += `<button class="gtab ${state.group === g.n ? "active" : ""}" style="--c:${g.c}" data-group="${esc(g.n)}">${g.i} ${esc(g.n)} <small>${g.total}</small></button>`;
+      const name = state.lang === "ur" ? (GN[g.n] || g.n) : g.n;
+      h += `<button class="gtab ${state.group === g.n ? "active" : ""}" style="--c:${g.c}" data-group="${esc(g.n)}">${g.i} ${esc(name)} <small>${g.total}</small></button>`;
     });
     h += `</div>`;
     const cur = out.find(g => g.n === state.group);
@@ -93,6 +164,11 @@
     $("cats").innerHTML = h;
   }
 
+  function renderQuick() {
+    const cur = state.q.trim().toLowerCase();
+    $("quickchips").innerHTML = QUICK.map(([n, q]) => `<button class="qchip ${cur === q ? "active" : ""}" data-q="${esc(q)}">${esc(n)}</button>`).join("");
+  }
+
   function card(l) {
     const m = meta(l.category), h = host(l.url);
     return `
@@ -102,8 +178,50 @@
       <h3>${esc(l.name)}</h3>
       <div class="host">${esc(h)}</div>
       <p class="desc">${esc(l.desc || "")}</p>
+      <div class="acts">
+        <button class="act" data-act="copy" data-url="${esc(l.url)}" title="Copy link" aria-label="Copy link">&#128203;</button>
+        <button class="act" data-act="wa" data-url="${esc(l.url)}" data-name="${esc(l.name)}" title="WhatsApp share" aria-label="Share on WhatsApp">&#128172;</button>
+      </div>
       <div class="card-foot"><span class="badge">${m.i} ${esc(l.category)}</span><span class="go">Open &rarr;</span></div>
     </a>`;
+  }
+
+  function sortList(a) {
+    if (state.sort === "az") return a.slice().sort((x, y) => x.name.localeCompare(y.name));
+    if (state.sort === "za") return a.slice().sort((x, y) => y.name.localeCompare(x.name));
+    if (state.sort === "opened") { const c = LS.get("lh-clicks", {}); return a.slice().sort((x, y) => (c[y.url] || 0) - (c[x.url] || 0)); }
+    return a;
+  }
+
+  function topSections() {
+    let h = "";
+    const d = dailyPick();
+    if (d) h += `<section class="sec today" style="--c:#d2793a"><h2 class="sec-title"><span class="sec-ico">&#127775;</span>${esc(t("today"))}</h2><div class="tgrid">${card(d)}</div></section>`;
+    const r = LS.get("lh-recent", []).map(u => byUrl[u]).filter(Boolean);
+    if (r.length) h += `<section class="sec" style="--c:#78716c"><h2 class="sec-title"><span class="sec-ico">&#128344;</span>${esc(t("recent"))} <small>${r.length}</small></h2><div class="grid">${r.map(card).join("")}</div></section>`;
+    return h;
+  }
+
+  function syncHash() {
+    try {
+      const p = new URLSearchParams();
+      if (state.group) p.set("g", state.group);
+      if (state.cat !== "All") p.set("c", state.cat);
+      if (state.q.trim()) p.set("q", state.q.trim());
+      const s = p.toString();
+      history.replaceState(null, "", s ? "#" + s : location.pathname + location.search);
+    } catch {}
+  }
+  function readHash() {
+    try {
+      const p = new URLSearchParams(location.hash.slice(1));
+      const cats = new Set(links.map(l => l.category));
+      const gd = groupsWithData().out;
+      const c = p.get("c"); if (c && cats.has(c)) state.cat = c;
+      const g = p.get("g"); if (g && gd.some(x => x.n === g)) state.group = g;
+      if (state.cat !== "All" && !state.group) { const f = gd.find(x => x.cats.includes(state.cat)); if (f) state.group = f.n; }
+      const q = p.get("q"); if (q) { state.q = q; $("search").value = q; }
+    } catch {}
   }
 
   function render() {
@@ -112,45 +230,79 @@
       const g = groupsWithData().out.find(x => x.n === state.group);
       if (g) res = res.filter(l => g.cats.includes(l.category));
     }
+    const order = [...new Set(res.map(l => l.category))];
+    res = sortList(res);
     const grouped = state.cat === "All" && !state.q.trim() && !state.onlyFav;
     if (grouped) {
       const by = {};
       res.forEach(l => (by[l.category] = by[l.category] || []).push(l));
-      $("content").innerHTML = Object.keys(by).map(c => {
+      let h = state.group ? "" : topSections();
+      h += order.map(c => {
         const m = meta(c);
         return `<section class="sec" style="--c:${m.c}"><h2 class="sec-title"><span class="sec-ico">${m.i}</span>${esc(c)} <small>${by[c].length}</small></h2><div class="grid">${by[c].map(card).join("")}</div></section>`;
       }).join("");
+      $("content").innerHTML = h;
     } else {
       $("content").innerHTML = `<div class="grid">${res.map(card).join("")}</div>`;
     }
     $("empty").hidden = res.length > 0;
-    $("stats").textContent = `${res.length} of ${links.length} links`;
+    $("stats").textContent = state.lang === "ur" ? `${links.length} میں سے ${res.length} لنکس` : `${res.length} of ${links.length} links`;
     $("favCount").textContent = Fav.count();
+    renderQuick();
+    syncHash();
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     $("year").textContent = new Date().getFullYear();
-    const fb = $("favToggle"); if (fb) fb.innerHTML = '&#9733; <span class="fav-text">Favorites</span> <span id="favCount">0</span>';
+    applyLang();
+    readHash();
+    $("sort").value = state.sort;
     renderCats(); render();
 
     $("search").addEventListener("input", e => { state.q = e.target.value; render(); });
 
+    $("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+
+    $("langToggle").addEventListener("click", () => {
+      state.lang = state.lang === "ur" ? "en" : "ur";
+      LS.set("lh-lang", state.lang);
+      applyLang(); renderCats(); render();
+    });
+
+    $("quickchips").addEventListener("click", e => {
+      const b = e.target.closest(".qchip"); if (!b) return;
+      const q = b.dataset.q;
+      state.q = state.q.trim().toLowerCase() === q ? "" : q;
+      state.cat = "All"; state.group = null;
+      $("search").value = state.q;
+      renderCats(); render();
+      $("content").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
     $("cats").addEventListener("click", e => {
       const all = e.target.closest("[data-all]");
       const g = e.target.closest("[data-group]");
-      const t = e.target.closest(".tile");
+      const tl = e.target.closest(".tile");
       if (all) { state.group = null; state.cat = "All"; }
       else if (g) { state.group = state.group === g.dataset.group ? null : g.dataset.group; state.cat = "All"; }
-      else if (t) { state.cat = state.cat === t.dataset.cat ? "All" : t.dataset.cat; }
+      else if (tl) { state.cat = state.cat === tl.dataset.cat ? "All" : tl.dataset.cat; }
       else return;
       renderCats(); render();
-      if (t || g) $("content").scrollIntoView({ behavior: "smooth", block: "start" });
+      if (tl || g) $("content").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     $("content").addEventListener("click", e => {
-      const s = e.target.closest(".star"); if (!s) return;
-      e.preventDefault(); e.stopPropagation();
-      Fav.toggle(s.dataset.url); render();
+      const s = e.target.closest(".star");
+      if (s) { e.preventDefault(); e.stopPropagation(); Fav.toggle(s.dataset.url); render(); return; }
+      const a = e.target.closest(".act");
+      if (a) {
+        e.preventDefault(); e.stopPropagation();
+        if (a.dataset.act === "copy") copyText(a.dataset.url);
+        else window.open("https://wa.me/?text=" + encodeURIComponent(a.dataset.name + " - " + a.dataset.url), "_blank", "noopener");
+        return;
+      }
+      const c = e.target.closest("a.card");
+      if (c) track(c.getAttribute("href"));
     });
 
     $("content").addEventListener("error", e => {

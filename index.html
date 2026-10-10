@@ -4,41 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Links Hub - Sab kuch ek jagah</title>
-  <meta name="description" content="500+ useful websites in one place for students, freelancers and everyone.">
+  <meta name="description" content="1000+ useful websites in one place for students, freelancers and everyone.">
+  <meta name="theme-color" content="#c8803a">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/themes.css?v=20261010025617">
-  <link rel="stylesheet" href="css/style.css?v=20261010025617">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/themes.css?v=20261010100525">
+  <link rel="stylesheet" href="css/style.css?v=20261010100525">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-in">
       <a class="brand" href="#"><span class="logo">&#9670;</span> Links Hub</a>
       <div class="top-actions">
-        <button id="favToggle" class="btn" title="Sirf favorites dikhao">&#9733; Favorites <span id="favCount">0</span></button>
-        <button id="themeToggle" class="btn icon" title="Theme badlo">&#9790;</button>
+        <button id="installBtn" class="btn" hidden data-i18n="install">Install app</button>
+        <a id="suggestBtn" class="btn hide-sm" target="_blank" rel="noopener noreferrer" href="https://github.com/waleedabbaschk/links-hub/issues/new?title=Link%20suggestion&body=Name%3A%0AURL%3A%0ACategory%3A%0ADescription%3A%0A" data-i18n="suggest">+ Link bhejo</a>
+        <button id="langToggle" class="btn hide-sm" data-i18n="lang">اردو</button>
+        <button id="favToggle" class="btn" title="Favorites">&#9733; <span class="fav-text" data-i18n="fav">Favorites</span> <span id="favCount">0</span></button>
+        <button id="themeToggle" class="btn icon" title="Theme">&#9790;</button>
       </div>
     </div>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <span class="pill">&#10024; Students, freelancers aur sab ke liye</span>
-      <h1>Sab zaroori websites, <span>ek jagah</span></h1>
-      <p>Government, jobs, education, AI aur daily tools. Search karo aur seedha kholo.</p>
+      <span class="pill" data-i18n="pill">Students, freelancers aur sab ke liye</span>
+      <h1><b data-i18n="h1a">Sab zaroori websites,</b> <span data-i18n="h1b">ek jagah</span></h1>
+      <p data-i18n="sub">Government, jobs, education aur daily tools. Search karo aur seedha kholo.</p>
       <div class="searchbox">
         <span>&#128269;</span>
-        <input id="search" type="search" placeholder="Search karo... (jaise: nadra, pdf, scholarship)" autocomplete="off">
+        <input id="search" type="search" data-i18n-ph="ph" placeholder="Search karo... (jaise: nadra, pdf, scholarship)" autocomplete="off">
         <kbd>/</kbd>
       </div>
       <div id="stats" class="stats"></div>
+      <div class="widgets" id="widgets">
+        <div class="wg"><span>&#128332;</span><small data-i18n="next">Agli namaz</small><select id="city" aria-label="City"></select><b id="prayer">...</b></div>
+        <div class="wg"><span>&#128181;</span><b id="fx">...</b></div>
+      </div>
+      <div class="quick"><span class="qlabel" data-i18n="student">Student corner:</span><span id="quickchips" class="qchips"></span></div>
     </section>
 
     <nav id="cats" class="cats" aria-label="Categories"></nav>
 
-    <div id="content"></div>
-    <p id="empty" class="empty" hidden>Kuch nahi mila. Doosra word try karo.</p>
+    <div class="toolbar">
+      <label for="sort" data-i18n="sortl">Sort:</label>
+      <select id="sort" class="sel">
+        <option value="default" data-i18n="s_def">Default</option>
+        <option value="az" data-i18n="s_az">A-Z</option>
+        <option value="za" data-i18n="s_za">Z-A</option>
+        <option value="opened" data-i18n="s_open">Meri most opened</option>
+      </select>
+    </div>
+
+    <div id="content">
+      <div class="grid"><div class="card skel"></div><div class="card skel"></div><div class="card skel"></div><div class="card skel"></div><div class="card skel"></div><div class="card skel"></div></div>
+    </div>
+    <p id="empty" class="empty" hidden data-i18n="empty">Kuch nahi mila. Doosra word try karo.</p>
   </main>
 
   <footer class="foot">
@@ -49,24 +72,34 @@
       <div class="foot-links">
         <a href="https://malikwaleedabbas.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a>
         <a href="https://github.com/waleedabbaschk" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/waleedabbaschk/links-hub/issues/new?title=Link%20suggestion&body=Name%3A%0AURL%3A%0ACategory%3A%0ADescription%3A%0A" target="_blank" rel="noopener noreferrer">Suggest a link</a>
       </div>
       <div class="foot-copy">Links Hub &copy; <span id="year"></span></div>
     </div>
   </footer>
 
-  <script src="data/links.js?v=20261010025617"></script>
-  <script src="data/links-2.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-3.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-4.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-5.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-6.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-7.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-8.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-9.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="data/links-10.js?v=20261010025617" onerror="this.remove()"></script>
-  <script src="js/theme.js?v=20261010025617"></script>
-  <script src="js/favorites.js?v=20261010025617"></script>
-  <script src="js/search.js?v=20261010025617"></script>
-  <script src="js/app.js?v=20261010025617"></script>
+  <nav class="bnav" aria-label="Quick menu">
+    <button data-nav="home"><span>&#127968;</span><small data-i18n="home">Home</small></button>
+    <button data-nav="search"><span>&#128269;</span><small data-i18n="search">Search</small></button>
+    <button data-nav="fav"><span>&#9733;</span><small data-i18n="fav">Favorites</small></button>
+    <button data-nav="lang"><span>&#127760;</span><small data-i18n="lang">اردو</small></button>
+  </nav>
+  <div id="toast" role="status"></div>
+
+  <script src="data/links.js?v=20261010100525"></script>
+  <script src="data/links-2.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-3.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-4.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-5.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-6.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-7.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-8.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-9.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="data/links-10.js?v=20261010100525" onerror="this.remove()"></script>
+  <script src="js/theme.js?v=20261010100525"></script>
+  <script src="js/favorites.js?v=20261010100525"></script>
+  <script src="js/search.js?v=20261010100525"></script>
+  <script src="js/app.js?v=20261010100525"></script>
+  <script src="js/extras.js?v=20261010100525"></script>
 </body>
 </html>
