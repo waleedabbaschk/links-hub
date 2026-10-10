@@ -45,7 +45,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["HubSpot Academy","https://academy.hubspot.com","Marketing","Free marketing courses.","courses,free"],
   ["Moz","https://moz.com","Marketing","SEO guides and tools.","seo,learn"],
   ["Later","https://later.com","Marketing","Plan Instagram posts.","instagram"],
-  ["Linktree Alternatives (Carrd)","https://carrd.co","Marketing","Simple one-page websites.","website,onepage"],
+  ["Carrd","https://carrd.co","Marketing","Simple one-page websites.","website,onepage"],
 
   // ---- Law ----
   ["Pakistan Code","https://pakistancode.gov.pk","Law","All Pakistani laws online.","pakistan,laws"],
@@ -71,7 +71,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["Plantwise (CABI)","https://www.plantwise.org","Agriculture","Information on crop diseases.","crops,diseases"],
 
   // ---- Cooking ----
-  ["Kitchen with Amna","https://www.kitchenwithamna.com","Cooking","Pakistani recipes.","pakistan,recipes"],
+  ["Kitchen With Amna","https://www.kitchenwithamna.com","Cooking","Pakistani recipes.","pakistan,recipes"],
   ["Food Fusion","https://www.foodfusion.com","Cooking","Pakistani recipes and videos.","pakistan,recipes"],
   ["Masala TV","https://www.masala.tv","Cooking","Recipes and cooking shows.","pakistan,recipes"],
   ["Cook with Faiza","https://cookwithfaiza.net","Cooking","Easy Pakistani recipes.","pakistan,recipes"],
@@ -93,7 +93,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["Khan Academy Kids","https://learn.khanacademy.org/khan-academy-kids","Kids & Family","Free learning app for kids.","kids,free"],
   ["UNICEF Pakistan","https://www.unicef.org/pakistan","Kids & Family","Children's health and education.","kids,pakistan"],
   ["Parents.com","https://www.parents.com","Kids & Family","Parenting tips.","parenting"],
-  ["Kids Quran (Learn Quran)","https://www.learnquran.org","Kids & Family","Learn to read the Quran.","quran,learn"],
+  ["Learn Quran","https://www.learnquran.org","Kids & Family","Learn to read the Quran.","quran,learn"],
 
   // ---- Home & DIY ----
   ["Instructables","https://www.instructables.com","Home & DIY","Do-it-yourself projects.","diy,projects"],
@@ -109,7 +109,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["Thingiverse","https://www.thingiverse.com","Home & DIY","Models for 3D printing.","3dprint"],
 
   // ---- Lifestyle ----
-  ["Pakistan Hotels (Hotels.com)","https://www.hotels.com","Lifestyle","Hotels and prices.","hotels,booking"],
+  ["Hotels.com","https://www.hotels.com","Lifestyle","Hotels and prices.","hotels,booking"],
   ["Numbeo","https://www.numbeo.com","Lifestyle","Cost of living by city.","cost,compare"],
   ["Expatistan","https://www.expatistan.com","Lifestyle","Compare cost of living.","cost,compare"],
   ["Nomad List","https://nomadlist.com","Lifestyle","Cities for remote workers.","remote,travel"],

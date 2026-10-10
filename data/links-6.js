@@ -18,7 +18,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["Worldometer","https://www.worldometers.info","Science","Live world statistics.","stats,live"],
   ["Ptable","https://ptable.com","Science","Interactive periodic table.","chemistry"],
   ["Google Earth","https://earth.google.com","Science","See the whole world in 3D.","maps,earth"],
-  ["Windy Earth Data (NOAA)","https://www.noaa.gov","Science","Weather and ocean research.","weather,ocean"],
+  ["NOAA","https://www.noaa.gov","Science","Weather and ocean research.","weather,ocean"],
   ["Khan Academy Science","https://www.khanacademy.org/science","Science","Free physics, chemistry and biology.","free,lessons"],
 
   // ---- History ----

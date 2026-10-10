@@ -98,14 +98,14 @@ window.LINKS = (window.LINKS || []).concat([
   ["Islamic Date Converter","https://www.islamicfinder.org/islamic-calendar","Utilities","Convert between Hijri and Gregorian dates.","hijri,date"],
   ["Weather.com","https://weather.com","Utilities","Weather updates.","weather"],
   ["Windy","https://www.windy.com","Utilities","Live wind and rain map.","weather,map"],
-  ["Remove Photo Background (Adobe)","https://www.adobe.com/express/feature/image/remove-background","Utilities","Remove image backgrounds.","image"],
+  ["Adobe Remove Background","https://www.adobe.com/express/feature/image/remove-background","Utilities","Remove image backgrounds.","image"],
   ["Resume.io","https://resume.io","Utilities","Build a professional CV.","cv,resume"],
   ["Zety","https://zety.com","Utilities","CV and cover letter builder.","cv,resume"],
   ["Europass","https://europass.europa.eu","Utilities","Free European-style CV maker.","cv,europe"],
   ["Online Voice Recorder","https://online-voice-recorder.com","Utilities","Record audio in the browser.","audio,record"],
   ["Online Video Cutter","https://online-video-cutter.com","Utilities","Trim and edit videos.","video"],
   ["Speechnotes","https://speechnotes.co","Utilities","Dictate and type by voice.","speech,typing"],
-  ["Urdu Inpage Online Keyboard","https://www.lexilogos.com/keyboard/urdu.htm","Utilities","Online Urdu keyboard.","urdu,keyboard"],
+  ["Online Urdu Keyboard","https://www.lexilogos.com/keyboard/urdu.htm","Utilities","Online Urdu keyboard.","urdu,keyboard"],
 
   // ---- News ----
   ["The News International","https://www.thenews.com.pk","News","Pakistan's English-language news.","pakistan,english"],

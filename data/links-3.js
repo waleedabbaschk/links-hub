@@ -132,7 +132,7 @@ window.LINKS = (window.LINKS || []).concat([
   ["Airbnb","https://www.airbnb.com","Travel","Rent houses and apartments.","stays"],
   ["Tripadvisor","https://www.tripadvisor.com","Travel","Reviews and ratings of places.","reviews,tours"],
   ["Google Maps","https://maps.google.com","Travel","Maps and directions.","maps,navigation"],
-  ["Roadmap Pakistan Tourism (Discover Pakistan)","https://www.tourism.gov.pk","Travel","Places to visit in Pakistan.","tourism,pakistan"],
+  ["Pakistan Tourism","https://www.tourism.gov.pk","Travel","Places to visit in Pakistan.","tourism,pakistan"],
 
   // ---- Jobs (extra) ----
   ["FPSC","https://www.fpsc.gov.pk","Jobs","Federal Public Service Commission, CSS and jobs.","css,federal,jobs"],
