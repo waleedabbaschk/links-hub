@@ -176,4 +176,4 @@ window.LINKS = (window.LINKS || []).concat([
   ["University of Kotli","https://uokajk.edu.pk","Kotli"],
   ["Karakoram International University","https://www.kiu.edu.pk","Gilgit"],
   ["University of Baltistan","https://uobs.edu.pk","Skardu"]
-].map(function (a) { return { name: a[0], url: a[1], category: "Universities", desc: a[2] + " ki university. Admissions, programs aur fee ki information.", tags: ["pakistan", "university", a[2].toLowerCase()] }; }));
+].map(function (a) { return { name: a[0], url: a[1], category: "Universities", desc: "University in " + a[2] + ". Admissions, programs and fee information.", tags: ["pakistan", "university", a[2].toLowerCase()] }; }));

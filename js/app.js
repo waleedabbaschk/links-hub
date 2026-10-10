@@ -4,29 +4,29 @@
     get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
-  const state = { q: "", cat: "All", group: null, onlyFav: false, sort: "default", lang: LS.get("lh-lang", "en") };
+  const state = { q: "", cat: "All", group: null, onlyFav: false, sort: "default", lang: "en" };
 
   const T = {
-    pill: ["Students, freelancers aur sab ke liye", "طلبہ، فری لانسرز اور سب کے لیے"],
-    h1a: ["Sab zaroori websites,", "تمام ضروری ویب سائٹس،"],
-    h1b: ["ek jagah", "ایک جگہ"],
-    sub: ["Government, jobs, education aur daily tools. Search karo aur seedha kholo.", "سرکاری سروسز، نوکریاں، تعلیم اور روزمرہ ٹولز۔ تلاش کریں اور سیدھا کھولیں۔"],
-    ph: ["Search karo... (jaise: nadra, pdf, scholarship)", "تلاش کریں... (جیسے: nadra, pdf)"],
+    pill: ["For students, freelancers and everyone", "طلبہ، فری لانسرز اور سب کے لیے"],
+    h1a: ["All the essential websites,", "تمام ضروری ویب سائٹس،"],
+    h1b: ["in one place", "ایک جگہ"],
+    sub: ["Government, jobs, education and daily tools. Search and open instantly.", "سرکاری سروسز، نوکریاں، تعلیم اور روزمرہ ٹولز۔ تلاش کریں اور سیدھا کھولیں۔"],
+    ph: ["Search... (e.g. nadra, pdf, scholarship)", "تلاش کریں... (جیسے: nadra, pdf)"],
     fav: ["Favorites", "پسندیدہ"],
-    suggest: ["+ Link bhejo", "+ لنک بھیجیں"],
+    suggest: ["+ Suggest a link", "+ لنک بھیجیں"],
     install: ["Install app", "ایپ انسٹال کریں"],
     sortl: ["Sort:", "ترتیب:"],
     s_def: ["Default", "عام"],
     s_az: ["A-Z", "A-Z"],
     s_za: ["Z-A", "Z-A"],
-    s_open: ["Meri most opened", "میرے سب سے زیادہ کھولے"],
-    today: ["Aaj ka tool", "آج کا ٹول"],
-    recent: ["Haal hi mein khole", "حال ہی میں کھولے گئے"],
+    s_open: ["My most opened", "میرے سب سے زیادہ کھولے"],
+    today: ["Tool of the day", "آج کا ٹول"],
+    recent: ["Recently opened", "حال ہی میں کھولے گئے"],
     student: ["Student corner:", "طلبہ کارنر:"],
     next: ["Agli namaz", "اگلی نماز"],
     all: ["All", "سب"],
-    copied: ["Link copy ho gaya", "لنک کاپی ہو گیا"],
-    empty: ["Kuch nahi mila. Doosra word try karo.", "کچھ نہیں ملا۔ کوئی اور لفظ آزمائیں۔"],
+    copied: ["Link copied", "لنک کاپی ہو گیا"],
+    empty: ["Nothing found. Try another word.", "کچھ نہیں ملا۔ کوئی اور لفظ آزمائیں۔"],
     home: ["Home", "ہوم"],
     search: ["Search", "تلاش"],
     lang: ["اردو", "English"]
@@ -263,7 +263,7 @@
 
     $("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
 
-    $("langToggle").addEventListener("click", () => {
+    ($("langToggle") || document.createElement("i")).addEventListener("click", () => {
       state.lang = state.lang === "ur" ? "en" : "ur";
       LS.set("lh-lang", state.lang);
       applyLang(); renderCats(); render();
@@ -283,6 +283,7 @@
       const all = e.target.closest("[data-all]");
       const g = e.target.closest("[data-group]");
       const tl = e.target.closest(".tile");
+      if (all || g || tl) { state.q = ""; $("search").value = ""; }
       if (all) { state.group = null; state.cat = "All"; }
       else if (g) { state.group = state.group === g.dataset.group ? null : g.dataset.group; state.cat = "All"; }
       else if (tl) { state.cat = state.cat === tl.dataset.cat ? "All" : tl.dataset.cat; }
@@ -323,7 +324,7 @@
     });
 
     const up = document.createElement("button");
-    up.id = "toTop"; up.setAttribute("aria-label", "Upar jao"); up.innerHTML = "&uarr;";
+    up.id = "toTop"; up.setAttribute("aria-label", "Back to top"); up.innerHTML = "&uarr;";
     up.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     document.body.appendChild(up);
     window.addEventListener("scroll", () => up.classList.toggle("show", window.scrollY > 700), { passive: true });
